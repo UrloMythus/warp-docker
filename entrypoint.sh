@@ -11,14 +11,14 @@ if [ ! -e /dev/net/tun ]; then
 fi
 
 # start dbus
-sudo mkdir -p /run/dbus
+mkdir -p /run/dbus
 if [ -f /run/dbus/pid ]; then
-    sudo rm /run/dbus/pid
+    rm /run/dbus/pid
 fi
-sudo dbus-daemon --config-file=/usr/share/dbus-1/system.conf
+dbus-daemon --config-file=/usr/share/dbus-1/system.conf
 
 # start the daemon
-sudo warp-svc --accept-tos &
+warp-svc --accept-tos &
 
 # sleep to wait for the daemon to start, default 2 seconds
 sleep "$WARP_SLEEP"
