@@ -13,7 +13,8 @@ LABEL COMMIT_SHA=${COMMIT_SHA}
 
 COPY entrypoint.sh /entrypoint.sh
 COPY ./healthcheck /healthcheck
-
+RUN echo "Building for TARGETPLATFORM: ${TARGETPLATFORM}"
+ARG TARGETPLATFORM="linux/amd64"
 # install dependencies
 RUN case ${TARGETPLATFORM} in \
       "linux/amd64")   export ARCH="amd64" ;; \
