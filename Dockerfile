@@ -21,7 +21,7 @@ RUN echo "Building for TARGETPLATFORM: ${TARGETPLATFORM}"
 RUN echo '#!/bin/sh\nexit 101' > /usr/sbin/policy-rc.d && \
     chmod +x /usr/sbin/policy-rc.d
 
-# Install dependencies
+# Install dependencies and configure architecture
 RUN case ${TARGETPLATFORM} in \
       "linux/amd64")   export ARCH="amd64" ;; \
       "linux/arm64")   export ARCH="armv8" ;; \
@@ -37,10 +37,9 @@ RUN case ${TARGETPLATFORM} in \
     apt-get install -y cloudflare-warp && \
     apt-get clean && \
     apt-get autoremove -y && \
-    rm /usr/sbin/policy-rc.d && \  # Remove policy-rc.d to restore normal behavior
+    rm /usr/sbin/policy-rc.d && \  # Remove policy-rc.d to restore normal behavior \
     MAJOR_VERSION=$(echo ${GOST_VERSION} | cut -d. -f1) && \
     MINOR_VERSION=$(echo ${GOST_VERSION} | cut -d. -f2) && \
-    # detect if version >= 2.12.0, which uses new filename syntax
     if [ "${MAJOR_VERSION}" -ge 3 ] || [ "${MAJOR_VERSION}" -eq 2 -a "${MINOR_VERSION}" -ge 12 ]; then \
       NAME_SYNTAX="new" && \
       if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
