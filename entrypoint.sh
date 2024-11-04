@@ -5,9 +5,9 @@ set -e
 
 # create a tun device if not exist to ensure compatibility with Podman
 if [ ! -e /dev/net/tun ]; then
-    sudo mkdir -p /dev/net
-    sudo mknod /dev/net/tun c 10 200
-    sudo chmod 600 /dev/net/tun
+    mkdir -p /dev/net
+    mknod /dev/net/tun c 10 200
+    chmod 600 /dev/net/tun
 fi
 
 # start dbus
